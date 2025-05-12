@@ -15,7 +15,7 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
-## 2. Install & configure Docker
+## 2. Install Docker
 ### Installation
 Details about the script can be found [here](https://get.docker.com/).
 
@@ -49,19 +49,16 @@ docker run hello-world
 ```
 You will see text output from Docker which confirms that it's set up and running successfully.
 
-### Configuration
-Next, create a directory where your Audiobookshelf metadata will live:
+## 3. Create Docker Compose file
+First, create a directory where your Audiobookshelf metadata will live:
 ```
 sudo mkdir -p /opt/stacks/audiobookshelf
 ```
-
 Navigate to the directory you just created for the remaining steps:
 ```
 cd /opt/stacks/audiobookshelf
 ```
-
-## 3. Create Docker Compose file
-See [Audiobookshelf's Docker Compose](https://www.audiobookshelf.org/docs#docker-compose-install) instructions for additional details:
+Create and configure your compose.yaml file. See [Audiobookshelf's Docker Compose](https://www.audiobookshelf.org/docs#docker-compose-install) instructions for additional details:
 ```
 sudo nano compose.yaml
 ```
