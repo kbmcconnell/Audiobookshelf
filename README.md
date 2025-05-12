@@ -183,7 +183,7 @@ sudo systemctl start cloudflared
 ```
 Try `docker compose up -d` again after setting up the service if you've completed all of the other steps.
 
-## Put it all together
+## 6. Put it all together
 In order for your Audiobookshelf and Cloudflared containers to talk to each other, you need to create a network. Documentation can be found [here](https://docs.docker.com/reference/cli/docker/network/create/):
 ```
 docker network create -d bridge my-network
