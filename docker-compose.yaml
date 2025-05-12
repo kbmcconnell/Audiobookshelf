@@ -1,0 +1,31 @@
+# Adapted from https://www.audiobookshelf.org/docs#docker-compose-install
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    ports:
+      - 13378:80
+    # Example file locations - make sure to use the correct file paths for your setup
+    volumes:
+      - /home/kbmcconnell/audiobooks>:/audiobooks
+      - /home/kbmcconnell/podcasts:/podcasts
+      - ./config:/config
+      - ./metadata:/metadata
+    environment:
+      - TZ=America/Los_Angeles
+    restart: unless-stopped
+    networks:
+      - audiobook
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: tunnel run --token TUNNEL-NAME
+    # Example file location - make sure to use the correct file paths for your setup
+    volumes:
+      - /cloudflared:/home/kbmcconnell/.cloudflared
+    networks:
+      - audiobook
+    restart: unless-stopped
+
+networks:
+  audiobook:
+    driver: bridge
