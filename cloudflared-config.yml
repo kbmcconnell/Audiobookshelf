@@ -1,0 +1,7 @@
+tunnel: TUNNELNAME
+credentials-file: /home/kbmcconnell/.cloudflared/<credentials-filename>
+
+ingress:
+  - hostname: yourcustomdomain.com
+    service: http://localhost:13378
+  - service: http_status:404
