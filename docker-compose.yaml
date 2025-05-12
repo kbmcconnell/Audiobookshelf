@@ -14,7 +14,7 @@ services:
       - TZ=America/Los_Angeles
     restart: unless-stopped
     networks:
-      - audiobook
+      - my-network
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
@@ -23,9 +23,9 @@ services:
     volumes:
       - /cloudflared:/home/kbmcconnell/.cloudflared
     networks:
-      - audiobook
+      - my-network
     restart: unless-stopped
 
 networks:
-  audiobook:
+  my-network:
     driver: bridge
