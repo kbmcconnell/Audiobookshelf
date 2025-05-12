@@ -18,7 +18,7 @@ services:
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
-    command: tunnel run --token TUNNEL-NAME
+    command: tunnel run --token TUNNELNAME
     # Example file location - make sure to use the correct file paths for your setup
     volumes:
       - /cloudflared:/home/kbmcconnell/.cloudflared
