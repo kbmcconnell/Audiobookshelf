@@ -54,11 +54,11 @@ First, create a directory where your Audiobookshelf metadata will live:
 ```
 sudo mkdir -p /opt/stacks/audiobookshelf
 ```
-Navigate to the directory you just created for the remaining steps:
+Navigate to this directory for the remaining steps:
 ```
 cd /opt/stacks/audiobookshelf
 ```
-Create and configure your compose.yaml file. See [Audiobookshelf's Docker Compose](https://www.audiobookshelf.org/docs#docker-compose-install) instructions for additional details:
+In the directory you just made, create and configure your compose.yaml file. See [Audiobookshelf's Docker Compose](https://www.audiobookshelf.org/docs#docker-compose-install) instructions for additional details:
 ```
 sudo nano compose.yaml
 ```
