@@ -233,10 +233,11 @@ The last thing left to do is to run your docker compose command to spin up your 
 ```
 docker compose up -d
 ```
-You should see a confirmation that both of your containers have been created. Test the setup was successful by visiting your domain. You should be greeted with the Audiobookshelf login page.
+You should see a confirmation that both of your containers have been created. Test the setup was successful by visiting your domain. You should be greeted with your Audiobookshelf homepage.
 
 ## Cloudflare settings recommendations
 Here are some basic recs to keep your Audiobookshelf secure. Feel free to do way more than this. These are all available on the free plan.
+
 **SSL/TLS settings**
 - Universal SSL Edge certificate
 - SSL/TLS encryption: full (strict)
@@ -246,6 +247,6 @@ Here are some basic recs to keep your Audiobookshelf secure. Feel free to do way
 - Automatic HTTPS Rewrites: toggle on
 
 ## Resources
-- [Audiobookshelf](https://www.audiobookshelf.org/
+- [Audiobookshelf](https://www.audiobookshelf.org/)
 - [Docker CLI documentation](https://docs.docker.com/reference/)
 - [Cloudflare tunnel documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
