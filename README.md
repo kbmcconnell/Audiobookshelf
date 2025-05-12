@@ -61,11 +61,11 @@ cd /opt/stacks/audiobookshelf
 ```
 
 ## 3. Create Docker Compose file
-To see an example of a completed Docker Compose file, head here. See [Audiobookshelf's Docker Compose](https://www.audiobookshelf.org/docs#docker-compose-install) instructions for additional details:
+See [Audiobookshelf's Docker Compose](https://www.audiobookshelf.org/docs#docker-compose-install) instructions for additional details:
 ```
 sudo nano compose.yaml
 ```
-Example:
+Example compose.yaml configuration:
 ```
 services:
   audiobookshelf:
