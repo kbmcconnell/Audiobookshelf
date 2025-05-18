@@ -35,7 +35,6 @@ sudo apt upgrade -y
 ```
 
 # 2. Install Docker
-## Installation
 Details about the below script can be found [here](https://get.docker.com/).
 
 If you don't have `curl` installed:
@@ -290,21 +289,6 @@ Here are some basic recs to help keep your Audiobookshelf secure. Feel free to d
 - TLS 1.3: toggle on
 - Automatic HTTPS Rewrites: toggle on
 
-# Updating Cloudflared
-Detailed instructions can be found [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/). Note that updating cloudflared will temporarily bring your Audiobookshelf down.
-
-If you're managing your tunnel locally, which is how we've set things up in this guide, the following commands will only work if you've also installed your tunnel as a service. The steps for this are under [Set up config file](#set-up-config-file).
-
-Update cloudflared package:
-```
-sudo apt-get update && sudo apt-get upgrade cloudflared
-```
-
-Restart the service:
-```
-sudo systemctl restart cloudflared.service
-```
-
 # Updating Audiobookshelf
 First navigate to the directory you created:
 ```
@@ -319,4 +303,19 @@ docker compose pull
 Finally, run the compose up command to apply the updates:
 ```
 docker compose up -d
+```
+
+# Updating Cloudflared
+Detailed instructions can be found [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/).
+
+If you're managing your tunnel locally, which is how we've set things up in this guide, the following commands will only work if you've also installed your tunnel as a service. They are unnecessary otherwise.
+
+Update cloudflared package:
+```
+sudo apt-get update && sudo apt-get upgrade cloudflared
+```
+
+Restart the service:
+```
+sudo systemctl restart cloudflared.service
 ```
