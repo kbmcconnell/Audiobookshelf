@@ -1,12 +1,31 @@
 # Audiobookshelf on Raspberry Pi 5
 Below are the resources and steps I followed to set up an Audiobookshelf library on a Raspberry Pi 5 using a Cloudflared tunnel and Docker. This is not a troubleshooting guide and the configuration might not suit your needs.
 
+## Table of Contents
+1. [Update your Raspberry Pi](#1-update-your-raspberry-pi)
+2. [Install Docker](#2-install-docker)
+3. [Create Docker Compose](#3-create-docker-compose)
+4. [Set up Audiobookshelf](#4-set-up-audiobookshelf)
+5. [Install Cloudflared](#5-install-cloudflared)
+6. [Connect to Cloudflare service](#6-connect-to-cloudflare-service)
+7. [Create Cloudflared tunnel](#7-create-cloudflared-tunnel)
+8. [Register custom domain](#8-register-custom-domain)
+9. [Cloudflared config file](#9-cloudflared-config-file)
+10. [Put it all together](10-put-it-all-together)
+11. [Updating Audiobookshelf](#updating-audiobookshelf)
+12. [Updating Cloudflared](#updating-cloudflared)
+
 ## Technology & Services used
 - [Audiobookshelf](https://www.audiobookshelf.org/)
 - Raspberry Pi 5
   - running the latest version of Bookworm OS
 - [Cloudfared tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) with custom domain
 - [Docker](https://www.docker.com/) containers
+
+## Resources
+- [Audiobookshelf](https://www.audiobookshelf.org/)
+- [Docker CLI documentation](https://docs.docker.com/reference/)
+- [Cloudflare tunnel documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
 
 # 1. Update your Raspberry Pi
 First make sure existing packages on your Raspberry Pi are up to date:
@@ -51,7 +70,7 @@ docker run hello-world
 ```
 You will see text output from Docker which confirms that it's set up and running successfully.
 
-# 3. Create Docker Compose file
+# 3. Create Docker Compose
 First, create a directory where your Audiobookshelf metadata will live:
 ```
 sudo mkdir -p /opt/stacks/audiobookshelf
@@ -98,11 +117,10 @@ http://<IPADDRESS>:13378
 
 You should be greeted by the Audiobookshelf user creation page for the root user. Create the root user for your Audiobookshelf. You will be prompted to log in once you've created your account. Refer to Audiobookshelf's documentation for additional configuration and directory structure.
 
-# 5. Set up Cloudflared tunnel
+# 5. Install Cloudflared
 If you wish to have access to your Audiobookshelf library from anywhere, or to share access with friends and family, you will need to connect it to the internet. This guide will set this up using a Cloudflared tunnel. If you choose to use a reverse proxy instead, there are a lot of examples available online to guide you.
 
-## Installation
-Update your packages if you're doing this some time after your initial Audiobookshelf setup:
+First, update your installed packages if you're doing this some time after your initial Audiobookshelf setup:
 ```
 sudo apt update
 sudo apt upgrade
@@ -128,12 +146,12 @@ Update your packages again:
 sudo apt update
 ```
 
-Install Cloudflared:
+Finally, install Cloudflared:
 ```
 sudo apt install cloudflared
 ```
 
-## Connect to Cloudflare service
+# 6. Connect to Cloudflare service
 Authenticate with Cloudflare to connect to your Raspberry Pi:
 ```
 cloudflared tunnel login
@@ -146,7 +164,7 @@ If you wish to copy your credentials to a server, they have been saved to:
 /home/kbmcconnell/.cloudflared/cert.pem
 ```
 
-## Create Cloudflared tunnel
+# 7. Create Cloudflared tunnel
 Once you've authenticated, create your tunnel:
 ```
 cloudflared tunnel create TUNNELNAME
@@ -161,7 +179,7 @@ Created tunnel TUNNELNAME with id XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 
 In the Cloudflare Zero Trust [dashboard](https://one.dash.cloudflare.com/), under Network > Tunnels, you should now see the tunnel you created.
 
-## Set up custom domain
+# 8. Register custom domain
 To purchase and/or register a new domain, go to your Cloudflare [dashboard](https://dash.cloudflare.com/) then Domain Registration > Register Domains. For convenience, you can purchase a Universal SSL certificate through Cloudflare.
 
 Next, create a DNS record for your tunnel. More detailed information can be found [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/):
@@ -175,7 +193,7 @@ INF Added CNAME yourdomain.com which will route to this tunnel tunnelID=XXXXXXXX
 ```
 Huzzah! Your tunnel should now be linked to your domain.
 
-## Set up config file
+# 9. Cloudflared config file
 Set up a config file for your tunnel.
 ```
 sudo nano ~/.cloudflared/config.yml
@@ -204,7 +222,7 @@ sudo systemctl start cloudflared
 
 Try `docker compose up -d` again after setting up the service if you've completed all of the other steps.
 
-# 6. Put it all together
+# 10. Put it all together
 In order for your Audiobookshelf and Cloudflared containers to talk to each other, you need to create a network. Documentation can be found [here](https://docs.docker.com/reference/cli/docker/network/create/):
 ```
 docker network create -d bridge my-network
@@ -261,8 +279,8 @@ docker compose up -d
 
 You should see a confirmation that both of your containers have been created. Test the setup was successful by visiting your domain. You should be greeted with your Audiobookshelf homepage.
 
-# Cloudflare settings
-Here are some basic recs to keep your Audiobookshelf secure. Feel free to do way more than this. These are all available on the free plan.
+## Cloudflare settings
+Here are some basic recs to help keep your Audiobookshelf secure. Feel free to do way more than this. These are all available on the free plan.
 
 **SSL/TLS settings**
 - Universal SSL Edge certificate
@@ -271,11 +289,6 @@ Here are some basic recs to keep your Audiobookshelf secure. Feel free to do way
 - Opportunistic Encryption: toggle on
 - TLS 1.3: toggle on
 - Automatic HTTPS Rewrites: toggle on
-
-# Resources
-- [Audiobookshelf](https://www.audiobookshelf.org/)
-- [Docker CLI documentation](https://docs.docker.com/reference/)
-- [Cloudflare tunnel documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)
 
 # Updating Cloudflared
 Detailed instructions can be found [here](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/). Note that updating cloudflared will temporarily bring your Audiobookshelf down.
